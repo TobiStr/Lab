@@ -4,8 +4,8 @@ Here I will try out new stuff, do some R&D and add some reusable scripts and cod
 
 ## Contents
 
-1. [[Local Kubernetes](1_Local_Kubernetes_NET)]: Setting up a local Kubernetes Environment on Windows running a .NET (C#) web api with:
+1. [[Kubernetes](Kubernetes)]: Setting up a local Kubernetes Environment on Windows running a .NET Aspire (C#) web api and frontend with:
    - Docker Desktop
-   - Kind
+   - Minikube
    - Tilt
    - Helm
