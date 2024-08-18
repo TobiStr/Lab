@@ -1,0 +1,19 @@
+{
+  "inputPath": "aspirate-output",
+  "containerImageTags": [
+    "latest"
+  ],
+  "kubeContext": "minikube",
+  "outputFormat": "docker",
+  "secrets": {
+    "salt": "LomLbEmUt1U6LNoJ",
+    "hash": "MZub21XvoAcKc3g6jtlshp2fu4wbcW1\u002BHF6pp8dhAXY=",
+    "secrets": {
+      "cache": {},
+      "apiservice": {},
+      "webfrontend": {
+        "ConnectionStrings__cache": "LomLbEmUt1U6LNoJzzQo7EhWIZ76xJDO7jHaJr5y33C8aZg4RZU="
+      }
+    }
+  }
+}
