@@ -162,6 +162,27 @@ spec:
       containers:
         - name: container-name
           image: image-name:tag
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet: 
+              path: /health
+              port: 8080
+            periodSeconds: 10
+            initialDelaySeconds: 10
+          volumeMounts:
+            - mountPath: /app/my-dir
+              name: volume-name
+      volumes:
+        - name: volume-name
+          # Specifies the Volume type (https://kubernetes.io/docs/concepts/storage/volumes/) Also possible: AWS or Azure Storage
+          emptyDir: {} # Simple Volume per Pod
+        - name: volume-name2
+          hostPath: # Path on Host Machine (Node, not cluster!)
+            path: /data
+            type: DirectoryOrCreate
+        - name: persistent-volume
+          persistentVolumeClaim:
+            claimName: my-storage-name-claim
 ```
 
 service.yaml (Filename is not important)
@@ -186,6 +207,40 @@ spec:
       targetPort: 443 # the port the application is listening on
   # LoadBalancer = Loadbalances accross all pods. ClusterIP = IP only for inside cluster. NodePort = expose on the port of the workernode
   type: LoadBalancer
+```
+
+persistentVolume.yaml 
+
+```yaml
+# https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-storage-name
+spec:
+  # For resources see: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  capacity: 
+    storage: 4Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  hostPath: # Path on Host Machine (Node, not cluster!)
+    path: /data
+    type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-storage-name-claim
+spec:
+  volumeName: my-storage-name
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
 ```
 
 `minikube service <service-name>` to expose it also on minikube
