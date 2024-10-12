@@ -164,7 +164,7 @@ spec:
           image: image-name:tag
           imagePullPolicy: Always
           livenessProbe:
-            httpGet: 
+            httpGet:
               path: /health
               port: 8080
             periodSeconds: 10
@@ -209,7 +209,7 @@ spec:
   type: LoadBalancer
 ```
 
-persistentVolume.yaml 
+persistentVolume.yaml
 
 ```yaml
 # https://kubernetes.io/docs/concepts/storage/persistent-volumes/
@@ -219,7 +219,7 @@ metadata:
   name: my-storage-name
 spec:
   # For resources see: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-  capacity: 
+  capacity:
     storage: 4Gi
   volumeMode: Filesystem
   accessModes:
@@ -240,7 +240,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-
 ```
 
 `minikube service <service-name>` to expose it also on minikube
@@ -352,3 +351,12 @@ To support multiple configurations in one file, you can separate the entries wit
 | `kubectl describe egress <egress-name>`                                      | Show detailed information about a specific Egress                                       |
 | `kubectl create -f <egress-file.yaml>`                                       | Create an Egress resource from a file                                                   |
 | `kubectl delete egress <egress-name>`                                        | Delete a specific Egress resource                                                       |
+
+### Kubectl configuration
+
+Kubernetes configuration file is located under `~/.kube/config`
+
+### Misc Info
+
+- Kubernetes automatically generates environment variables, containing IP adresses of services e.g. `MY_SERVICE_SERVICE_HOST` and `MY_SERVICE_SERVICE_PORT` for the service "my-service"
+- K8s uses CoreDNS for service discovery and DNS resolution. You can reach services by theirs service names and namespaces (e.g. `my-service.my-namespace`)
